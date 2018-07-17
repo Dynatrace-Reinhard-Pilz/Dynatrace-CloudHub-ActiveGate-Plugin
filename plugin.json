@@ -1,0 +1,272 @@
+{
+  "name": "custom.remote.python.cloudhub",
+  "version": "1.0",
+  "type": "python",
+  "entity": "CUSTOM_DEVICE",
+  "processTypeNames": ["PYTHON"],
+  "technologies": ["CloudHub Environments"],
+  "favicon": "https://www.appnovation.com/sites/default/files/old_site_static/city_minipage/sites/default/files/mulesoft-icon.png",
+  "source": {
+    "package": "cloudhub_plugin",
+    "className": "CloudHubPlugin",
+    "install_requires": ["requests>=2.6.0"],
+    "activation": "Remote"
+  },
+  "metrics": [
+    {
+      "entity": "CUSTOM_DEVICE",
+      "timeseries": {
+        "key": "cpu",
+        "unit": "Percent",
+        "dimensions": ["worker"],
+        "displayname": "CPU"
+      }
+    },
+    {
+      "entity": "CUSTOM_DEVICE",
+      "timeseries": {
+        "key": "memoryPercentageUsed",
+        "unit": "Percent",
+        "dimensions": ["worker"],
+        "displayname": "Used Memory"
+      }
+    },
+    {
+      "entity": "CUSTOM_DEVICE",
+      "timeseries": {
+        "key": "diskReadBytes",
+        "unit": "Byte",
+        "dimensions": ["worker"],
+        "displayname": "Bytes Read from Disk"
+      }
+    },
+    {
+      "entity": "CUSTOM_DEVICE",
+      "timeseries": {
+        "key": "diskWriteBytes",
+        "unit": "Byte",
+        "dimensions": ["worker"],
+        "displayname": "Bytes Written to Disk"
+      }
+    },
+    {
+      "entity": "CUSTOM_DEVICE",
+      "timeseries": {
+        "key": "networkIn",
+        "unit": "Byte",
+        "dimensions": ["worker"],
+        "displayname": "Bytes Read from Network"
+      }
+    },
+    {
+      "entity": "CUSTOM_DEVICE",
+      "timeseries": {
+        "key": "networkOut",
+        "unit": "Byte",
+        "dimensions": ["worker"],
+        "displayname": "Bytes Written to Network"
+      }
+    },
+    {
+      "entity": "CUSTOM_DEVICE",
+      "timeseries": {
+        "key": "memoryTotalUsed",
+        "unit": "Byte",
+        "dimensions": ["worker"],
+        "displayname": "Total Memory Used"
+      }
+    },
+    {
+      "entity": "CUSTOM_DEVICE",
+      "timeseries": {
+        "key": "memoryTotalMax",
+        "unit": "Byte",
+        "dimensions": ["worker"],
+        "displayname": "Max Memory Available"
+      }
+    },
+    {
+      "entity": "CUSTOM_DEVICE",
+      "timeseries": {
+        "key": "totalWorkers",
+        "unit": "Count",
+        "displayname": "Workers"
+      }
+    },
+    {
+      "entity": "CUSTOM_DEVICE",
+      "timeseries": {
+        "key": "startedWorkers",
+        "unit": "Count",
+        "displayname": "Started Workers"
+      }
+    },
+    {
+      "entity": "CUSTOM_DEVICE",
+      "timeseries": {
+        "key": "stoppedWorkers",
+        "unit": "Count",
+        "displayname": "Stopped Workers"
+      }
+    },
+    {
+      "entity": "CUSTOM_DEVICE",
+      "timeseries": {
+        "key": "rpm",
+        "unit": "PerMinute",
+        "displayname": "Requests/Min"
+      }
+    }
+  ],
+  "properties" : [
+    {
+      "key" : "user",
+      "type" :  "STRING"
+    },
+    {
+      "key": "pass",
+      "type": "PASSWORD"
+    }
+  ],
+  "configUI": {
+    "displayName": "CloudHub Plugin",
+    "properties": [
+      {
+        "key" : "pass",
+        "displayName" :  "Password",
+        "displayHint": "Basic Auth Password"
+      },    
+      {
+        "key" : "user",
+        "displayName" :  "User",
+        "displayHint": "Basic Auth User name"
+      }    
+    ]
+  },
+  "ui": {
+    "keymetrics" : [
+      {
+        "key": "cpu",
+        "aggregation": "avg",
+        "mergeaggregation": "avg",
+        "displayname": "CPU"
+      },
+      {
+        "key": "memoryPercentageUsed",
+        "aggregation": "avg",
+        "mergeaggregation": "avg",
+        "displayname": "Memory"
+      },
+      {
+        "key": "totalWorkers",
+        "aggregation": "avg",
+        "mergeaggregation": "avg",
+        "displayname": "Workers"
+      },
+      {
+        "key": "rpm",
+        "aggregation": "avg",
+        "mergeaggregation": "avg",
+        "displayname": "Message/min"
+      }
+    ],
+    "keycharts": [
+      {
+        "group": "Messages",
+        "title": "Messages",
+        "series": [
+          {
+            "key": "rpm",
+            "aggregation": "avg",
+            "displayname": "Request per minute",
+            "seriestype": "area"
+          }
+        ]
+      },
+      {
+        "group": "Network I/O",
+        "title": "Network I/O",
+        "series": [
+          {
+            "key": "networkIn",
+            "aggregation": "avg",
+            "displayname": "Bytes Read from Network",
+            "seriestype": "area"
+          },
+          {
+            "key": "networkOut",
+            "aggregation": "avg",
+            "displayname": "Bytes Written to Network",
+            "color": "rgba(42, 182, 244, 0.6)",
+            "seriestype": "area"
+          }
+        ]
+      },
+      {
+        "group": "Memory",
+        "title": "Memory",
+        "series": [
+          {
+            "key": "memoryTotalUsed",
+            "aggregation": "avg",
+            "displayname": "Total Memory Used",
+            "seriestype": "area"
+          },
+          {
+            "key": "memoryTotalMax",
+            "aggregation": "avg",
+            "displayname": "Max Memory Used",
+            "color": "rgba(42, 182, 244, 0.6)",
+            "seriestype": "area"
+          }
+        ]
+      },
+      {
+        "group": "Workers",
+        "title": "Workers",
+        "series": [
+          {
+            "key": "totalWorkers",
+            "aggregation": "avg",
+            "displayname": "Total",
+            "seriestype": "area"
+          },
+          {
+            "key": "startedWorkers",
+            "aggregation": "avg",
+            "displayname": "Started",
+            "color": "rgba(42, 182, 244, 0.6)",
+            "seriestype": "area"
+          },
+          {
+            "key": "stoppedWorkers",
+            "aggregation": "avg",
+            "displayname": "Stopped",
+            "color": "rgba(42, 182, 244, 0.6)",
+            "seriestype": "area"
+          }
+        ]
+      },
+      {
+        "group": "Disk I/O",
+        "title": "Disk I/O",
+        "series": [
+          {
+            "key": "diskReadBytes",
+            "aggregation": "avg",
+            "displayname": "Bytes Read from Disk",
+            "seriestype": "area"
+          },
+          {
+            "key": "diskWriteBytes",
+            "aggregation": "avg",
+            "displayname": "Bytes Written to Disk",
+            "color": "rgba(42, 182, 244, 0.6)",
+            "seriestype": "area"
+          }
+        ]
+      }     
+    ],
+    "charts": [ ]
+  }
+}
